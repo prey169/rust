@@ -26,7 +26,7 @@ enum Collision {
 #[derive(Component)]
 struct Paddle;
 
-#[derive(Component)]
+#[derive(Bundle)]
 struct PaddleBundle {
     paddle: Paddle,
     shape: Shape,
@@ -109,10 +109,8 @@ fn spawn_paddles(
         let left_paddle_x = -window_width / 2. + padding;
 
         let mesh = Mesh::from(Rectangle::new(PADDLE_WIDTH, PADDLE_HEIGHT));
-        let material = ColorMaterial::from(Color::rgb(0., 1., 0.));
 
         let mesh_handle = meshes.add(mesh);
-        //let material_handle = materials.add(material);
 
         commands.spawn((
             Player,
