@@ -5,9 +5,9 @@ use bevy::{
 };
 
 const BALL_SIZE: f32 = 5.;
-const BALL_SPEED: f32 = 5.;
+const BALL_SPEED: f32 = 4.;
 const GUTTER_HEIGHT: f32 = 100.;
-const PADDLE_SPEED: f32 = 5.;
+const PADDLE_SPEED: f32 = 4.;
 const PADDLE_WIDTH: f32 = 10.;
 const PADDLE_HEIGHT: f32 = 50.;
 
@@ -282,7 +282,7 @@ fn handle_collisions(
                 Aabb2d::new(position.0, shape.0 / 2.),
             ) {
                 match collision {
-                    Collision::Left | Collision::Right => ball_velocity.0.x *= -1.,
+                    Collision::Left | Collision::Right => ball_velocity.0.x *= -1.1,
                     Collision::Top | Collision::Bottom => ball_velocity.0.y *= -1.,
                 }
             }
