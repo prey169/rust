@@ -1,0 +1,8 @@
+[package]
+name = "l3_cache"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+pmc = "1.7.0"
+rss = "2.0.8"

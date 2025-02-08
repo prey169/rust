@@ -1,0 +1,43 @@
+// --------------------------------
+// Project: web scrapping
+// --------------------------------
+use std::sync::{mpsc, Arc, Mutex};
+use std::thread;
+use std::time::{Duration, Instant};
+use ureq::{Agent, AgentBuilder};
+
+fn main() -> Result<(), ureq::Error> {
+    let webpages = vec![
+        "https://gist.github.com/recluze/a98aa1804884ca3b3ad3",
+        "https://gist.github.com/recluze/5051735efe3fc189b90d",
+    ];
+
+    let agent = ureq::AgentBuilder::new().build();
+    let now = Instant::now();
+
+    for web_page in &webpages {
+        let web_body = agent.get(web_page).call()?.into_string()?;
+    }
+    println!("Time taken without threads: {:.2?}", now.elapsed());
+
+    let now = Instant::now();
+    let agent = Arc::new(agent);
+    let mut handles: Vec<thread::JoinHandle<Result<(), ureq::Error>>> = Vec::new();
+
+    for web_page in webpages {
+        let agent_thread = agent.clone();
+        let t = thread::spawn(move || {
+            let web_body = agent_thread.get(web_page).call()?.into_string()?;
+
+            Ok(())
+        });
+        handles.push(t);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+
+    println!("Time taken using Threads: {:.2?}", now.elapsed());
+    Ok(())
+}
