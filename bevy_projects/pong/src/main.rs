@@ -152,7 +152,7 @@ fn spawn_gutters(
         let top_gutter = GutterBundle::new(0., top_gutter_y, window_width);
         let bottom_gutter = GutterBundle::new(0., bottom_gutter_y, window_width);
 
-        let mesh = Mesh::from(Rectangle::from_size((top_gutter.shape.0)));
+        let mesh = Mesh::from(Rectangle::from_size(top_gutter.shape.0));
         let material = ColorMaterial::from(Color::rgb(0., 0., 0.));
 
         // We can share these meshes between our gutters by cloning them
@@ -391,7 +391,7 @@ fn update_score(mut score: ResMut<Score>, mut events: EventReader<Scored>) {
 }
 
 fn update_scoreboard(
-    mut player_score: Query<&mut Text, (With<PlayerScoreboard>)>,
+    mut player_score: Query<&mut Text, With<PlayerScoreboard>>,
     mut ai_score: Query<&mut Text, (With<AiScoreboard>, Without<PlayerScoreboard>)>,
     score: Res<Score>,
 ) {
